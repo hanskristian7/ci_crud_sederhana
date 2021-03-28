@@ -6,4 +6,9 @@ class Mahasiswa_model extends CI_Model
 		$result = $this->db->get('mahasiswa')->result_array();
 		return $result;
 	}
+
+	public function insertNewMahasiswa($data)
+	{
+		$this->db->insert('mahasiswa', $data);
+	}
 }
