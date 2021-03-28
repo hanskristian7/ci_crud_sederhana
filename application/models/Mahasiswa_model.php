@@ -41,4 +41,14 @@ class Mahasiswa_model extends CI_Model
 		$this->db->or_like('email', $keyword);
 		return $this->db->get('mahasiswa')->result_array();
 	}
+
+	public function getMahasiswaPagination($limit, $start)
+	{
+		return $this->db->get('mahasiswa', $limit, $start)->result_array();
+	}
+
+	public function countMahasiswa()
+	{
+		return $this->db->get('mahasiswa')->num_rows();
+	}
 }
