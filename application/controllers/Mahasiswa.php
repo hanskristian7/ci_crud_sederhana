@@ -15,6 +15,12 @@ class Mahasiswa extends CI_Controller
 		$data['mahasiswa'] = $this->mahasiswa->getAllMahasiswa();
 		// var_dump($data['mahasiswa']);
 		// die;
+
+		if ($this->input->post('keyword')) {
+			$keyword = $this->input->post('keyword');
+			$data['mahasiswa'] = $this->mahasiswa->searchMahasiswaByKeyword($keyword);
+		}
+
 		$this->load->view('templates/header', $data);
 		$this->load->view('mahasiswa/index', $data);
 		$this->load->view('templates/footer');
@@ -80,5 +86,13 @@ class Mahasiswa extends CI_Controller
 			Data mahasiswa berhasil diubah</div>');
 			redirect('mahasiswa');
 		}
+	}
+
+	public function detail($id)
+	{
+		$data['mahasiswa'] = $this->mahasiswa->getMahasiswaById($id);
+		$this->load->view('templates/header', $data);
+		$this->load->view('mahasiswa/detail', $data);
+		$this->load->view('templates/footer');
 	}
 }

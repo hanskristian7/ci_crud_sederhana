@@ -9,14 +9,12 @@ class Mahasiswa_model extends CI_Model
 
 	public function insertNewMahasiswa($data)
 	{
-		$this->db->insert('mahasiswa', $data);
-		return true;
+		return $this->db->insert('mahasiswa', $data);
 	}
 
 	public function deleteMahasiswaById($id)
 	{
-		$this->db->delete('mahasiswa', ['id' => $id]);
-		return true;
+		return $this->db->delete('mahasiswa', ['id' => $id]);
 	}
 
 	public function getMahasiswaById($id)
@@ -33,5 +31,14 @@ class Mahasiswa_model extends CI_Model
 	{
 		$this->db->replace('mahasiswa', $data);
 		return true;
+	}
+
+	public function searchMahasiswaByKeyword($keyword)
+	{
+		$this->db->like('nama', $keyword);
+		$this->db->or_like('jurusan', $keyword);
+		$this->db->or_like('nim', $keyword);
+		$this->db->or_like('email', $keyword);
+		return $this->db->get('mahasiswa')->result_array();
 	}
 }
