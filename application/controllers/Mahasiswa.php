@@ -17,9 +17,11 @@ class Mahasiswa extends CI_Controller
 		// buat pagination
 		$this->load->library('pagination');
 		$config['base_url'] = 'http://localhost/belajarCI/crud_sederhana/mahasiswa/index/';
+		// $config['total_rows'] = $this->mahasiswa->countMahasiswa();
+
+		//total_row masih belum ngikutin row yang dicari
 		$config['total_rows'] = $this->mahasiswa->countMahasiswa();
 		$config['per_page'] = 3;
-
 
 		$config['num_links'] = 2;
 
@@ -55,16 +57,18 @@ class Mahasiswa extends CI_Controller
 
 
 		$data['start'] = $this->uri->segment(3);
-		$data['mahasiswa'] = $this->mahasiswa->getMahasiswaPagination($config['per_page'], $data['start']);
+
+		if ($this->input->post('keyword')) {
+			$keyword = $this->input->post('keyword');
+			$data['mahasiswa'] = $this->mahasiswa->getMahasiswaPagination($config['per_page'], $data['start'], $keyword);
+			// $data['mahasiswa'] = $this->mahasiswa->searchMahasiswaByKeyword($keyword);
+		} else {
+			$data['mahasiswa'] = $this->mahasiswa->getMahasiswaPagination($config['per_page'], $data['start']);
+		}
 		// end pagination
 
 		// var_dump($data['mahasiswa']);
 		// die;
-
-		if ($this->input->post('keyword')) {
-			$keyword = $this->input->post('keyword');
-			$data['mahasiswa'] = $this->mahasiswa->searchMahasiswaByKeyword($keyword);
-		}
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('mahasiswa/index', $data);

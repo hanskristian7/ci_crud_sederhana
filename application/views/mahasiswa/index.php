@@ -55,7 +55,11 @@
 					</tbody>
 				</table>
 
-				<?= $this->pagination->create_links(); ?>
+				<div class="row">
+					<div class="col-md-6 mx-auto">
+						<?= $this->pagination->create_links(); ?>
+					</div>
+				</div>
 			<?php endif; ?>
 		</div>
 	</div>
